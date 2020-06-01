@@ -1,0 +1,36 @@
+.title {
+  position: absolute;
+  top: 80%;
+  left: 40%;
+  color: white;
+}
+
+.image {
+  /* width: 100%; */
+  height: 200px;
+  opacity: 1;
+}
+
+.imageContainer {
+  position: relative;
+  width: fit-content;
+  height: 200px;
+
+  cursor: pointer;
+  user-select: none;
+  margin: 35px;
+}
+
+.imageContainer:hover {
+  background-color: black;
+}
+
+.imageContainer:hover > .image {
+  opacity: 0.6;
+}
+
+.image2 {
+  /* width: 80vw; */
+  max-height: 70vh;
+  min-height: 70vh;
+}
