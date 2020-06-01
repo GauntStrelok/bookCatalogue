@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import Book from './components/Book';
 import './App.css';
 
