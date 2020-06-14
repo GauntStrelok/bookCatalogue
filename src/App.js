@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Book from './components/Book';
+import firebaseAuth from './authentication/firebaseAuth'
 import './App.css';
 
 function App() {
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+
+    //firebaseAuth();
+
+  });
+
   return (<div className="App">
     <div className="BooksContainer">
       <Book src="https://i.imgur.com/vl7NdiI.jpg" title="Star Wars"></Book>
