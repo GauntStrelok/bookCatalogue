@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 #config files
-src/authentication/firebaseAuth.js
+src/firebase/config.js

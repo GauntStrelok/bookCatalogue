@@ -1,3 +1,7 @@
 .BooksContainer {
   display: flex;
 }
+
+.formContainer {
+  margin: 30px;
+}
