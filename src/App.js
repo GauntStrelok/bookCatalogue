@@ -9,11 +9,17 @@ import $ from 'jquery';
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import {firebaseConfig} from "./firebase/config";
-var app = firebase.initializeApp(firebaseConfig);
+let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
+let database = null;
+let auth = false;
 function App() {
 
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState([]); // [variable, funcion]
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [linkML, setLinkML] = useState(""); // [variable, funcion]
+  const [linkImage, setLinkImage] = useState("");
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -21,7 +27,7 @@ function App() {
       $('body').addClass('loaded');
       //$('.tm-current-year').text(new Date().getFullYear());  Update year in copyright
     });
-    if(!booksLoaded) {
+    if (!booksLoaded) {
       booksLoaded = true;
       loadBooks();
     }
@@ -29,7 +35,8 @@ function App() {
   });
 
   function loadBooks() {
-    var database = firebase.firestore(app);
+    if (!database)
+      database = firebase.firestore(app);
     database.collection('books').get().then((snapshot) => {
       let databaseBooks = [];
       snapshot.forEach(function(doc) {
@@ -38,31 +45,54 @@ function App() {
       setBooks(databaseBooks);
     }).catch((error) => {
       console.log(error);
-    })
+    });
+  }
+
+  function saveBook(event) {
+    //TODO validaciones
+    event.preventDefault();
+    if (!database)
+      database = firebase.firestore(app);
+      console.log(JSON.stringify({description, title, linkML, linkImage}));
+    database.collection("books").add({description, title, linkML, linkImage}).then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+    }).catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+    return false;
+
+  }
+
+  function setInputValue(inputSetter) {
+    return function(event) {
+      inputSetter(event.target.value);
+    }
   }
 
   function adminPage() {
-    firebaseAuth();
+    if(!auth) firebaseAuth(() => {
+      auth = true;
+    });
     // <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     return (<div className="formContainer">
-      <form >
+      <form onSubmit={saveBook}>
         <div class="form-group">
           <label for="linkML">Link a mercado libre</label>
-          <input id="linkML" type="text" class="form-control" placeholder="Ingresar link de mercado libre"></input>
+          <input id="linkML" type="text" class="form-control" placeholder="Ingresar link de mercado libre" value={linkML} onChange={setInputValue(setLinkML)}></input>
         </div>
         <div class="form-group">
           <label for="linkImage">Link imagen a mostrar</label>
-          <input id="linkImage" type="text" class="form-control" placeholder="Ingresar link a imagen a utilizar"></input>
+          <input id="linkImage" type="text" class="form-control" placeholder="Ingresar link a imagen a utilizar" value={linkImage} onChange={setInputValue(setLinkImage)}></input>
         </div>
         <div class="form-group">
           <label for="bookTitle">Titulo</label>
-          <input id="bookTitle" type="text" class="form-control" placeholder="Ingresar titulo del libro"></input>
+          <input id="bookTitle" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={title} onChange={setInputValue(setTitle)}></input>
         </div>
         <div class="form-group">
           <label for="bookDescription">Descripcion</label>
-          <textarea id="bookDescription" type="text" class="form-control" placeholder="Ingresar descripcion del libro"></textarea>
+          <textarea id="bookDescription" type="text" class="form-control" placeholder="Ingresar descripcion del libro" value={description} onChange={setInputValue(setDescription)}></textarea>
         </div>
-        <button class="btn btn-primary">Submit</button>
+        <button class="btn btn-primary" onClick={saveBook}>Submit</button>
       </form>
     </div>);
   }
