@@ -12,7 +12,7 @@ import {firebaseConfig} from "./firebase/config";
 let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
-let auth = true; //controls that i have already authed
+let auth = false; //controls that i have already authed
 function App() {
 
   const [books, setBooks] = useState([]); // [variable, funcion]
