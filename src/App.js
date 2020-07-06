@@ -12,14 +12,23 @@ import {firebaseConfig} from "./firebase/config";
 let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
-let auth = false;
+let auth = true; //controls that i have already authed
 function App() {
 
   const [books, setBooks] = useState([]); // [variable, funcion]
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [linkML, setLinkML] = useState(""); // [variable, funcion]
+  const [linkML, setLinkML] = useState("");
   const [linkImage, setLinkImage] = useState("");
+  const [author, setAuthor] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [genre, setGenre] = useState("");
+  const [publicationYear, setPublicationYear] = useState("");
+  const [iSBN, setISBN] = useState("");
+  const [numberPages, setNumberPages] = useState("");
+  const [editionType, setEditionType] = useState("");
+  const [coverType, setCoverType] = useState("");
+  const [status, setStatus] = useState("");
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -53,14 +62,78 @@ function App() {
     event.preventDefault();
     if (!database)
       database = firebase.firestore(app);
-      console.log(JSON.stringify({description, title, linkML, linkImage}));
-    database.collection("books").add({description, title, linkML, linkImage}).then(function(docRef) {
+    console.log(JSON.stringify({
+      description,
+      title,
+      linkML,
+      linkImage,
+      author,
+      publisher,
+      genre,
+      publicationYear,
+      iSBN,
+      numberPages,
+      editionType,
+      coverType,
+      status
+    }));
+    database.collection("books").add({
+      description,
+      title,
+      linkML,
+      linkImage,
+      author,
+      publisher,
+      genre,
+      publicationYear,
+      iSBN,
+      numberPages,
+      editionType,
+      coverType,
+      status
+    }).then(function(docRef) {
       console.log("Document written with ID: ", docRef.id);
     }).catch(function(error) {
       console.error("Error adding document: ", error);
     });
     return false;
 
+  }
+
+  function readExcelRow(event) {
+    event.preventDefault();
+    if (!event.clipboardData || !event.clipboardData.items)
+      return;
+    var items = event.clipboardData.items;
+    var data;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].type == 'text/plain') {
+        data = items[i];
+        break;
+      }
+    }
+    if (!data)
+      return;
+    data.getAsString(function(text) {
+      text = text.replace(/\r/g, '').trim('\n');
+      var row = text.split('\t').map(function(value) {
+        return value.trim().replace(/^"(.*)"$/, '$1');
+      });
+      if(row.length === 1) {
+        setTitle(row[0])
+      } else if(row.length === 16) {
+        setTitle(row[0]);
+        setAuthor(row[1]);
+        setPublisher(row[2]);
+        setGenre(row[3]);
+        setPublicationYear(row[4]);
+        setISBN(row[5]);
+        setNumberPages(row[7]);
+        setEditionType(row[8]);
+        setCoverType(row[9]);
+        setStatus(row[10]);
+      }
+    });
   }
 
   function setInputValue(inputSetter) {
@@ -70,9 +143,11 @@ function App() {
   }
 
   function adminPage() {
-    if(!auth) firebaseAuth(() => {
-      auth = true;
-    });
+    if (!auth)
+      firebaseAuth(() => {
+        auth = true;
+      });
+
     // <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     return (<div className="formContainer">
       <form onSubmit={saveBook}>
@@ -86,11 +161,47 @@ function App() {
         </div>
         <div class="form-group">
           <label for="bookTitle">Titulo</label>
-          <input id="bookTitle" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={title} onChange={setInputValue(setTitle)}></input>
+          <input id="bookTitle" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={title} onChange={setInputValue(setTitle)} onPaste={readExcelRow}></input>
         </div>
         <div class="form-group">
           <label for="bookDescription">Descripcion</label>
           <textarea id="bookDescription" type="text" class="form-control" placeholder="Ingresar descripcion del libro" value={description} onChange={setInputValue(setDescription)}></textarea>
+        </div>
+        <div class="form-group">
+          <label for="bookAuthor">Autor</label>
+          <input id="bookAuthor" type="text" class="form-control" placeholder="Ingresar autor del libro" value={author} onChange={setInputValue(setAuthor)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookPublisher">Editorial</label>
+          <input id="bookPublisher" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={publisher} onChange={setInputValue(setPublisher)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookGenre">Género</label>
+          <input id="bookGenre" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={genre} onChange={setInputValue(setGenre)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookPublicationYear">Año de publicación</label>
+          <input id="bookPublicationYear" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={publicationYear} onChange={setInputValue(setPublicationYear)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookISBN">ISBN</label>
+          <input id="bookISBN" type="text" class="form-control" placeholder="" value={iSBN} onChange={setInputValue(setISBN)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookNumberPages">Número de páginas</label>
+          <input id="bookNumberPages" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={numberPages} onChange={setInputValue(setNumberPages)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookEditionType">Tipo de Edición</label>
+          <input id="bookEditionType" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={editionType} onChange={setInputValue(setEditionType)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookCoverType">Tipo de tapa</label>
+          <input id="bookCoverType" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={coverType} onChange={setInputValue(setCoverType)}></input>
+        </div>
+        <div class="form-group">
+          <label for="bookStatus">Estado del libro</label>
+          <input id="bookStatus" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={status} onChange={setInputValue(setStatus)}></input>
         </div>
         <button class="btn btn-primary" onClick={saveBook}>Submit</button>
       </form>
