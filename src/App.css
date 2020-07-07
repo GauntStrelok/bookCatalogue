@@ -5,3 +5,20 @@
 .formContainer {
   margin: 30px;
 }
+
+.tm-site-name {
+  background-image: url(./img/akiraTitle.jpg);
+  background-size: contain;
+  height: 119px;
+  background-repeat-x: no-repeat;
+  background-position: center;
+}
+
+.akiraBooks .tm-welcome-section {
+  min-height: 300px;
+  height: 50vh;
+}
+
+body {
+  background-image: url(./img/akiraOpacity.jpg);
+}

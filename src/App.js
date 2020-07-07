@@ -208,7 +208,7 @@ function App() {
     </div>);
   }
   function booksPage() {
-    return <div>
+    return <div className="akiraBooks">
       <div id="loader-wrapper">
         <div id="loader"></div>
         <div class="loader-section section-left"></div>
@@ -230,7 +230,7 @@ function App() {
 
           <div class="container text-center tm-welcome-container">
             <div class="tm-welcome">
-              <h1 class="text-uppercase mb-3 tm-site-name">Akira Books</h1>
+              <h1 class="text-uppercase mb-3 tm-site-name"></h1>
               <p class="tm-site-description">Busqueda Libros mercado libre</p>
             </div>
           </div>
