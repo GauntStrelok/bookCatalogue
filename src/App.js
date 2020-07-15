@@ -250,24 +250,6 @@ function App() {
           </div>
 
           <div class="row tm-albums-container grid">
-            <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-              <Book src="https://http2.mlstatic.com/aramburu-maria-o-donnell-libro-nuevo-planeta-D_NQ_NP_952964-MLA41734512713_052020-V.webp" title="Algo de Lyna"></Book>
-            </div>
-            <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-              <Book src="https://i.imgur.com/vl7NdiI.jpg" title="Star Wars"></Book>
-            </div>
-            <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-              <Book src="https://http2.mlstatic.com/libro-basta-de-amores-de-mierda-D_NQ_NP_742437-MLA31068254336_062019-V.webp" title="Aramburu"></Book>
-            </div>
-            <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-              <Book src="https://http2.mlstatic.com/aramburu-maria-o-donnell-libro-nuevo-planeta-D_NQ_NP_952964-MLA41734512713_052020-V.webp" title="Algo de Lyna"></Book>
-            </div>
-            <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-              <Book src="https://http2.mlstatic.com/aramburu-maria-o-donnell-libro-nuevo-planeta-D_NQ_NP_952964-MLA41734512713_052020-V.webp" title="Algo de Lyna"></Book>
-            </div>
-            <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-              <Book src="https://http2.mlstatic.com/aramburu-maria-o-donnell-libro-nuevo-planeta-D_NQ_NP_952964-MLA41734512713_052020-V.webp" title="Algo de Lyna"></Book>
-            </div>
             {
               books.map((book) => {
                 return <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">

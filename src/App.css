@@ -22,3 +22,7 @@
 body {
   background-image: url(./img/akiraOpacity.jpg);
 }
+
+.tm-album-col {
+  margin-top: 15px;
+}
