@@ -13,6 +13,7 @@ let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
 let auth = false; //controls that i have already authed
+let allBooks = [];
 function App() {
 
   const [books, setBooks] = useState([]); // [variable, funcion]
@@ -29,6 +30,7 @@ function App() {
   const [editionType, setEditionType] = useState("");
   const [coverType, setCoverType] = useState("");
   const [status, setStatus] = useState("");
+  const [filters, setFilters] = useState({});
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
@@ -43,18 +45,33 @@ function App() {
     //firebaseAuth();
   });
 
-  function loadBooks() {
-    if (!database)
+  function loadBooks(loadFilters) {
+    if (!database) {
       database = firebase.firestore(app);
-    database.collection('books').get().then((snapshot) => {
+    }
+    let bookCollection = database.collection('books');
+    // if(loadFilters) {
+    //   bookCollection.where("title", "")
+    // }
+    bookCollection.get().then((snapshot) => {
       let databaseBooks = [];
       snapshot.forEach(function(doc) {
         databaseBooks.push(doc.data());
       });
       setBooks(databaseBooks);
+      allBooks = [...databaseBooks];
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  function searchBooks(event) {
+    event.preventDefault();
+    //TODO replace by backend search
+    //loadBooks(filters);
+    let filteredBooks = allBooks.filter(book => {
+      return book.title.includes(filters.title);
+    })
   }
 
   function saveBook(event) {
@@ -119,9 +136,9 @@ function App() {
       var row = text.split('\t').map(function(value) {
         return value.trim().replace(/^"(.*)"$/, '$1');
       });
-      if(row.length === 1) {
+      if (row.length === 1) {
         setTitle(row[0])
-      } else if(row.length === 16) {
+      } else if (row.length === 16) {
         setTitle(row[0]);
         setAuthor(row[1]);
         setPublisher(row[2]);
@@ -139,6 +156,14 @@ function App() {
   function setInputValue(inputSetter) {
     return function(event) {
       inputSetter(event.target.value);
+    }
+  }
+
+  function setFilterValue(property) {
+    return function(event) {
+      let newFilters = {...filters};
+      newFilters[property] = event.target.value;
+      setFilters(newFilters);
     }
   }
 
@@ -242,36 +267,34 @@ function App() {
             <form action="index.html" method="GET" class="form-inline tm-search-form">
               <div class="text-uppercase tm-new-release">BUSQUEDA</div>
               <div class="form-group tm-search-box">
-                <input type="text" name="keyword" class="form-control tm-search-input" placeholder="Type your keyword ..."/>
-                <input type="submit" value="Search" class="form-control tm-search-submit"></input>
-              </div>
-
-            </form>
-          </div>
-
-          <div class="row tm-albums-container grid">
-            {
-              books.map((book) => {
-                return <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-                  <Book src={book.linkImage} title={book.title} description={book.description}></Book>
+                <input type="text" name="keyword" class="form-control tm-search-input" placeholder="Type your keyword ..." value={filters.title} onChange={setFilterValue("title")}></input>
+                  <input type="submit" value="Search" class="form-control tm-search-submit"></input>
                 </div>
-              })
-            }
+
+              </form>
+            </div>
+
+            <div class="row tm-albums-container grid">
+              {
+                books.map((book) => {
+                  return <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
+                    <Book src={book.linkImage} title={book.title} description={book.description}></Book>
+                  </div>
+                })
+              }
+            </div>
+
           </div>
 
         </div>
-
       </div>
-    </div>
-  }
+      } function page() {
+        if (window.location.pathname === "/admin.html")
+          return adminPage();
+        return booksPage();
+      }
 
-  function page() {
-    if (window.location.pathname === "/admin.html")
-      return adminPage();
-    return booksPage();
-  }
-
-  return page();
+      return page();
 }
 
 export default App;
