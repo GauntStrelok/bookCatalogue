@@ -45,19 +45,31 @@ function App() {
     //firebaseAuth();
   });
 
-  function loadBooks(loadFilters) {
+  function loadBooks(loadFilters, startAfter) {
+    console.log(loadFilters, startAfter);
     if (!database) {
       database = firebase.firestore(app);
     }
     let bookCollection = database.collection('books');
-    // if(loadFilters) {
-    //   bookCollection.where("title", "")
-    // }
+    if(loadFilters) {
+      if(loadFilters.title) {
+        let valuesToSearch = loadFilters.title.split(" ");
+        valuesToSearch = valuesToSearch.slice(0,9);
+        bookCollection = bookCollection.where("titleKeywords", "array-contains-any", valuesToSearch);
+        bookCollection = bookCollection.where("title", "==", loadFilters.title);
+      }
+    }
+    if(startAfter) {
+      bookCollection = bookCollection.startAfter(startAfter);
+    }
+    bookCollection = bookCollection.limit(100);
     bookCollection.get().then((snapshot) => {
+
       let databaseBooks = [];
       snapshot.forEach(function(doc) {
         databaseBooks.push(doc.data());
       });
+      console.log("encontrados", databaseBooks);
       setBooks(databaseBooks);
       allBooks = [...databaseBooks];
     }).catch((error) => {
@@ -68,10 +80,26 @@ function App() {
   function searchBooks(event) {
     event.preventDefault();
     //TODO replace by backend search
-    //loadBooks(filters);
-    let filteredBooks = allBooks.filter(book => {
+    loadBooks(filters);
+    /*let filteredBooks = allBooks.filter(book => {
       return book.title.includes(filters.title);
-    })
+    })*/
+  }
+
+  function clearForm() {
+    setTitle("");
+    setDescription("");
+    setLinkML("");
+    setLinkImage("");
+    setAuthor("");
+    setPublisher("");
+    setGenre("");
+    setPublicationYear("");
+    setISBN("");
+    setNumberPages("");
+    setEditionType("");
+    setCoverType("");
+    setStatus("");
   }
 
   function saveBook(event) {
@@ -79,6 +107,7 @@ function App() {
     event.preventDefault();
     if (!database)
       database = firebase.firestore(app);
+    let titleKeywords = title.split(" ");
     console.log(JSON.stringify({
       description,
       title,
@@ -92,7 +121,8 @@ function App() {
       numberPages,
       editionType,
       coverType,
-      status
+      status,
+      titleKeywords
     }));
     database.collection("books").add({
       description,
@@ -107,11 +137,15 @@ function App() {
       numberPages,
       editionType,
       coverType,
-      status
+      status,
+      titleKeywords
     }).then(function(docRef) {
       console.log("Document written with ID: ", docRef.id);
+      alert("Libro guardado correctamente");
+      clearForm();
     }).catch(function(error) {
       console.error("Error adding document: ", error);
+      prompt("Error ha fallado la carga copiar esto al administrador(ctrl+c):" + JSON.stringify(error));
     });
     return false;
 
@@ -161,7 +195,9 @@ function App() {
 
   function setFilterValue(property) {
     return function(event) {
-      let newFilters = {...filters};
+      let newFilters = {
+        ...filters
+      };
       newFilters[property] = event.target.value;
       setFilters(newFilters);
     }
@@ -264,37 +300,38 @@ function App() {
 
         <div class="container">
           <div class="tm-search-form-container">
-            <form action="index.html" method="GET" class="form-inline tm-search-form">
+            <form onSubmit={searchBooks} class="form-inline tm-search-form">
               <div class="text-uppercase tm-new-release">BUSQUEDA</div>
               <div class="form-group tm-search-box">
-                <input type="text" name="keyword" class="form-control tm-search-input" placeholder="Type your keyword ..." value={filters.title} onChange={setFilterValue("title")}></input>
-                  <input type="submit" value="Search" class="form-control tm-search-submit"></input>
+                <input type="text" name="Palabra clave" class="form-control tm-search-input" placeholder="Type your keyword ..." value={filters.title} onChange={setFilterValue("title")}></input>
+                <input type="submit" value="Buscar" class="form-control tm-search-submit"></input>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="row tm-albums-container grid">
+            {
+              books.map((book) => {
+                return <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
+                  <Book src={book.linkImage} title={book.title} description={book.description}></Book>
                 </div>
-
-              </form>
-            </div>
-
-            <div class="row tm-albums-container grid">
-              {
-                books.map((book) => {
-                  return <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-                    <Book src={book.linkImage} title={book.title} description={book.description}></Book>
-                  </div>
-                })
-              }
-            </div>
-
+              })
+            }
           </div>
 
         </div>
-      </div>
-      } function page() {
-        if (window.location.pathname === "/admin.html")
-          return adminPage();
-        return booksPage();
-      }
 
-      return page();
+      </div>
+    </div>
+  }
+  function page() {
+    if (window.location.pathname === "/admin.html")
+      return adminPage();
+    return booksPage();
+  }
+
+  return page();
 }
 
 export default App;
