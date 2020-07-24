@@ -12,13 +12,12 @@ import {firebaseConfig} from "./firebase/config";
 let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
-let auth = false; //controls that i have already authed
+let auth = true; //controls that i have already authed
 let allBooks = [];
 function App() {
 
   const [books, setBooks] = useState([]); // [variable, funcion]
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [linkML, setLinkML] = useState("");
   const [linkImage, setLinkImage] = useState("");
   const [author, setAuthor] = useState("");
@@ -88,7 +87,6 @@ function App() {
 
   function clearForm() {
     setTitle("");
-    setDescription("");
     setLinkML("");
     setLinkImage("");
     setAuthor("");
@@ -109,7 +107,6 @@ function App() {
       database = firebase.firestore(app);
     let titleKeywords = title.split(" ");
     console.log(JSON.stringify({
-      description,
       title,
       linkML,
       linkImage,
@@ -125,7 +122,6 @@ function App() {
       titleKeywords
     }));
     database.collection("books").add({
-      description,
       title,
       linkML,
       linkImage,
@@ -171,7 +167,7 @@ function App() {
         return value.trim().replace(/^"(.*)"$/, '$1');
       });
       if (row.length === 1) {
-        setTitle(row[0])
+        setTitle(row[0]);
       } else if (row.length === 16) {
         setTitle(row[0]);
         setAuthor(row[1]);
@@ -223,10 +219,6 @@ function App() {
         <div class="form-group">
           <label for="bookTitle">Titulo</label>
           <input id="bookTitle" type="text" class="form-control" placeholder="Ingresar titulo del libro" value={title} onChange={setInputValue(setTitle)} onPaste={readExcelRow}></input>
-        </div>
-        <div class="form-group">
-          <label for="bookDescription">Descripcion</label>
-          <textarea id="bookDescription" type="text" class="form-control" placeholder="Ingresar descripcion del libro" value={description} onChange={setInputValue(setDescription)}></textarea>
         </div>
         <div class="form-group">
           <label for="bookAuthor">Autor</label>
@@ -314,7 +306,7 @@ function App() {
             {
               books.map((book) => {
                 return <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-                  <Book src={book.linkImage} title={book.title} description={book.description}></Book>
+                  <Book data={book}></Book>
                 </div>
               })
             }

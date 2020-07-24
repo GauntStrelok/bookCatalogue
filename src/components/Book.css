@@ -44,5 +44,9 @@
 
 .descriptionContainer {
   display: inline;
-  text-align: center;
+  /* text-align: center; */
+}
+
+.descriptionContainer span {
+  margin: 10px
 }
