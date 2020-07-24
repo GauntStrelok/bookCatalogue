@@ -9,11 +9,16 @@ import $ from 'jquery';
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import {firebaseConfig} from "./firebase/config";
+import SocialNet from './components/SocialNet';
 let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
 let auth = true; //controls that i have already authed
 let allBooks = [];
+
+const facebookNet = "https://www.facebook.com/akirabooks/";
+const instagramNet = "https://www.instagram.com/akira_books/";
+const twitterNet = "https://twitter.com/AkiraBooks";
 function App() {
 
   const [books, setBooks] = useState([]); // [variable, funcion]
@@ -284,7 +289,12 @@ function App() {
           <div class="container text-center tm-welcome-container">
             <div class="tm-welcome">
               <h1 class="text-uppercase mb-3 tm-site-name"></h1>
-              <p class="tm-site-description">Busqueda Libros mercado libre</p>
+              <div>
+              <SocialNet src="/smallFLogo.png" href={facebookNet}></SocialNet>
+              <SocialNet src="/smallInstaLogo.png" href={instagramNet}></SocialNet>
+              <SocialNet src="/smallTLogo.png" href={twitterNet}></SocialNet>
+              </div>
+              <p class="tm-site-description">Seguinos en nuestras redes</p>
             </div>
           </div>
 
