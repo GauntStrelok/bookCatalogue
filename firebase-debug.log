@@ -1,0 +1,44 @@
+[debug] [2020-07-24T13:11:50.873Z] ----------------------------------------------------------------------
+[debug] [2020-07-24T13:11:50.876Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-07-24T13:11:50.876Z] CLI Version:   8.5.0
+[debug] [2020-07-24T13:11:50.876Z] Platform:      win32
+[debug] [2020-07-24T13:11:50.877Z] Node Version:  v10.16.3
+[debug] [2020-07-24T13:11:50.885Z] Time:          Fri Jul 24 2020 10:11:50 GMT-0300 (Argentina Standard Time)
+[debug] [2020-07-24T13:11:50.885Z] ----------------------------------------------------------------------
+[debug] [2020-07-24T13:11:50.885Z] 
+[debug] [2020-07-24T13:11:50.916Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-07-24T13:11:50.917Z] > authorizing via signed-in user
+[debug] [2020-07-24T13:11:50.917Z] [iam] checking project akirabooks-78192 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-07-24T13:11:50.921Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-07-24T13:11:50.921Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-07-24T13:11:51.096Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 24 Jul 2020 13:12:43 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-07-24T13:11:51.105Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/akirabooks-78192:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-07-24T13:11:52.555Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 24 Jul 2020 13:12:45 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1007","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-07-24T13:11:52.556Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project akirabooks-78192:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2020-07-24T13:11:52.557Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/akirabooks-78192  
+ 
+[debug] [2020-07-24T13:11:52.972Z] <<< HTTP RESPONSE 403 {"vary":"X-Origin, Referer, Origin,Accept-Encoding","content-type":"application/json; charset=UTF-8","date":"Fri, 24 Jul 2020 13:12:45 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-07-24T13:11:52.972Z] <<< HTTP RESPONSE BODY {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2020-07-24T13:11:52.977Z] HTTP Error: 403, The caller does not have permission
+[debug] [2020-07-24T13:11:53.106Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at module.exports (C:\Users\pgotelli\AppData\Roaming\nvm\v10.16.3\node_modules\firebase-tools\lib\responseToError.js:38:12)
+    at Request._callback (C:\Users\pgotelli\AppData\Roaming\nvm\v10.16.3\node_modules\firebase-tools\lib\api.js:41:35)
+    at Request.self.callback (C:\Users\pgotelli\AppData\Roaming\nvm\v10.16.3\node_modules\firebase-tools\node_modules\request\request.js:185:22)
+    at Request.emit (events.js:198:13)
+    at Request.EventEmitter.emit (domain.js:448:20)
+    at Request.<anonymous> (C:\Users\pgotelli\AppData\Roaming\nvm\v10.16.3\node_modules\firebase-tools\node_modules\request\request.js:1154:10)
+    at Request.emit (events.js:198:13)
+    at Request.EventEmitter.emit (domain.js:448:20)
+    at IncomingMessage.<anonymous> (C:\Users\pgotelli\AppData\Roaming\nvm\v10.16.3\node_modules\firebase-tools\node_modules\request\request.js:1076:12)
+    at Object.onceWrapper (events.js:286:20)
+    at IncomingMessage.emit (events.js:203:15)
+    at IncomingMessage.EventEmitter.emit (domain.js:448:20)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+[error] 
+[error] Error: Failed to get Firebase project akirabooks-78192. Please make sure the project exists and your account has permission to access it.
