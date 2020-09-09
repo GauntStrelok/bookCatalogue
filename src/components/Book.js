@@ -66,6 +66,12 @@ export default function Book(props) {
             <span>Estado del libro:</span>
             <span>{data.status}</span>
           </div>
+          <div>
+            <span>Ver en mercado libre:</span>
+            <a target="_blank" href={data.linkML}>
+              <img src="/MLButton.png"></img>
+            </a>
+          </div>
         </div>
       </Modal>
     </div>
