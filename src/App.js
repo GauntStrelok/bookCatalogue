@@ -19,6 +19,7 @@ let allBooks = [];
 const facebookNet = "https://www.facebook.com/akirabooks/";
 const instagramNet = "https://www.instagram.com/akira_books/";
 const twitterNet = "https://twitter.com/AkiraBooks";
+const whatsappNet = "https://wa.me/5491135269984";
 function App() {
   const [books, setBooks] = useState([]); // [variable, funcion]
   const [title, setTitle] = useState("");
@@ -29,6 +30,7 @@ function App() {
   const [genre, setGenre] = useState("");
   const [publicationYear, setPublicationYear] = useState("");
   const [iSBN, setISBN] = useState("");
+  const [language, setLanguage] = useState("");
   const [numberPages, setNumberPages] = useState("");
   const [editionType, setEditionType] = useState("");
   const [coverType, setCoverType] = useState("");
@@ -104,6 +106,7 @@ function App() {
     setGenre("");
     setPublicationYear("");
     setISBN("");
+    setLanguage("");
     setNumberPages("");
     setEditionType("");
     setCoverType("");
@@ -125,6 +128,7 @@ function App() {
         genre,
         publicationYear,
         iSBN,
+        language,
         numberPages,
         editionType,
         coverType,
@@ -143,6 +147,7 @@ function App() {
         genre,
         publicationYear,
         iSBN,
+        language,
         numberPages,
         editionType,
         coverType,
@@ -190,6 +195,7 @@ function App() {
         setGenre(row[3]);
         setPublicationYear(row[4]);
         setISBN(row[5]);
+        setLanguage(row[6]);
         setNumberPages(row[7]);
         setEditionType(row[8]);
         setCoverType(row[9]);
@@ -314,6 +320,17 @@ function App() {
             ></input>
           </div>
           <div class="form-group">
+            <label for="bookLanguage">Idioma</label>
+            <input
+              id="bookLanguage"
+              type="text"
+              class="form-control"
+              placeholder=""
+              value={language}
+              onChange={setInputValue(setLanguage)}
+            ></input>
+          </div>
+          <div class="form-group">
             <label for="bookNumberPages">Número de páginas</label>
             <input
               id="bookNumberPages"
@@ -400,6 +417,10 @@ function App() {
                   <SocialNet
                     src="/smallTLogo.png"
                     href={twitterNet}
+                  ></SocialNet>
+                  <SocialNet
+                    src="/smallWhatsappLogo.png"
+                    href={whatsappNet}
                   ></SocialNet>
                 </div>
                 <p class="tm-site-description">Seguinos en nuestras redes</p>
