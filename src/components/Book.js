@@ -51,6 +51,10 @@ export default function Book(props) {
             <span>{data.iSBN}</span>
           </div>
           <div>
+            <span>ISBN:</span>
+            <span>{data.language}</span>
+          </div>
+          <div>
             <span>Numero de paginas:</span>
             <span>{data.numberPages}</span>
           </div>
