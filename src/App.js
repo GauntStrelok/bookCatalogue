@@ -188,7 +188,7 @@ function App() {
       });
       if (row.length === 1) {
         setTitle(row[0]);
-      } else if (row.length === 16) {
+      } else if (row.length >= 11) {
         setTitle(row[0]);
         setAuthor(row[1]);
         setPublisher(row[2]);
