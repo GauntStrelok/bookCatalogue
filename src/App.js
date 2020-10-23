@@ -22,6 +22,7 @@ const twitterNet = "https://twitter.com/AkiraBooks";
 const whatsappNet = "https://wa.me/5491135269984";
 function App() {
   const [books, setBooks] = useState([]); // [variable, funcion]
+  const [shownBooks, setShownBooks] = useState([]);
   const [title, setTitle] = useState("");
   const [linkML, setLinkML] = useState("");
   const [linkImage, setLinkImage] = useState("");
@@ -71,7 +72,7 @@ function App() {
     if (startAfter) {
       bookCollection = bookCollection.startAfter(startAfter);
     }
-    bookCollection = bookCollection.limit(100);
+    bookCollection = bookCollection.limit(1000);
     bookCollection
       .get()
       .then((snapshot) => {
@@ -82,16 +83,29 @@ function App() {
         console.log("encontrados", databaseBooks);
         setBooks(databaseBooks);
         allBooks = [...databaseBooks];
+        setShownBooks([...databaseBooks]);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  function filterBooks(filters) {
+    if (filters && filters.title) {
+        let text = filters.title;
+        let filteredBooks = books.filter((book) => {
+          return book.title.includes(text) || book.author.includes(text);
+        });
+        setShownBooks(filteredBooks);
+    } else {
+      setShownBooks([...books]);
+    }
+  }
+
   function searchBooks(event) {
     event.preventDefault();
     //TODO replace by backend search
-    loadBooks(filters);
+    filterBooks(filters);
     /*let filteredBooks = allBooks.filter(book => {
       return book.title.includes(filters.title);
     })*/
@@ -451,7 +465,7 @@ function App() {
             </div>
 
             <div class="row tm-albums-container grid">
-              {books.map((book) => {
+              {shownBooks.map((book) => {
                 return (
                   <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
                     <Book data={book}></Book>
