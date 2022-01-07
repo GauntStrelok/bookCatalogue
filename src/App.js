@@ -92,9 +92,13 @@ function App() {
 
   function filterBooks(filters) {
     if (filters && filters.title) {
-        let text = filters.title;
+        let text = filters.title.toLowerCase();
         let filteredBooks = books.filter((book) => {
-          return book.title.includes(text) || book.author.includes(text);
+          let bookTitle = book.title.toLowerCase();
+          let includesBookTitle = bookTitle.includes(text);
+          let bookAuthor = book.author.toLowerCase();
+          let includesBookAuthor = bookAuthor.includes(text);
+          return includesBookTitle || includesBookAuthor;
         });
         setShownBooks(filteredBooks);
     } else {
