@@ -50,3 +50,14 @@
 .descriptionContainer span {
   margin: 10px
 }
+
+.buttonClose {
+  width: 4vh;
+  height: 4vh;
+  background-color: white;
+  border: hidden;
+  cursor: pointer;
+  position: absolute;
+  right: 1vh;
+  top: 1vh;
+}

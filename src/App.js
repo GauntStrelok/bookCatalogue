@@ -8,7 +8,7 @@ import "./css/tooplate-style.css";
 import $ from "jquery";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
-import { firebaseConfig } from "./firebase/config";
+import firebaseConfig from "./firebase/config";
 import SocialNet from "./components/SocialNet";
 let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
@@ -98,7 +98,15 @@ function App() {
           let includesBookTitle = bookTitle.includes(text);
           let bookAuthor = book.author.toLowerCase();
           let includesBookAuthor = bookAuthor.includes(text);
-          return includesBookTitle || includesBookAuthor;
+          let bookPublisher = book.publisher.toLowerCase();
+          let includesBookPublisher = bookPublisher.includes(text);
+          let bookGenre = book.genre.toLowerCase();
+          let includesBookGenre = bookGenre.includes(text);
+          let bookISBN = book.iSBN.toLowerCase();
+          let includesBookISBN = bookISBN.includes(text);
+          let bookEditionType = book.editionType.toLowerCase();
+          let includesBookEditionType = bookEditionType.includes(text);
+          return includesBookTitle || includesBookAuthor || includesBookPublisher || includesBookGenre || includesBookISBN || includesBookEditionType;
         });
         setShownBooks(filteredBooks);
     } else {

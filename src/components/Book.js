@@ -26,6 +26,7 @@ export default function Book(props) {
         onRequestClose={closeModal}
         contentLabel="Minimal Modal Example"
       >
+        <button onClick={closeModal} className="buttonClose"><img src="/closeIcon.png" className="image"/></button> 
         <img src={data.linkImage} className="image2" />
         <div className="descriptionContainer">
           <div>{data.title || "Titulo de Libro"}</div>
