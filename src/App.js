@@ -78,7 +78,9 @@ function App() {
       .then((snapshot) => {
         let databaseBooks = [];
         snapshot.forEach(function (doc) {
-          databaseBooks.push(doc.data());
+          let data = doc.data();
+          data.id = doc.id;
+          databaseBooks.push(data);
         });
         console.log("encontrados", databaseBooks);
         setBooks(databaseBooks);
