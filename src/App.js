@@ -492,12 +492,81 @@ function App() {
       </div>
     );
   }
+  function deletePage() {
+    return (
+      <div className="akiraBooks">
+        <div id="loader-wrapper">
+          <div id="loader"></div>
+          <div class="loader-section section-left"></div>
+          <div class="loader-section section-right"></div>
+        </div>
+
+        <div class="tm-main">
+          <div class="tm-welcome-section">
+            <div class="container tm-navbar-container">
+              <div class="row">
+                <div class="col-xl-12">
+                  <nav class="navbar navbar-expand-sm">
+                    <ul class="navbar-nav ml-auto"></ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            <div class="container text-center tm-welcome-container">
+              <div class="tm-welcome">
+                <h1 class="text-uppercase mb-3 tm-site-name"></h1>
+              </div>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="tm-search-form-container">
+              <form onSubmit={searchBooks} class="form-inline tm-search-form">
+                <div class="text-uppercase tm-new-release">BUSQUEDA</div>
+                <div class="form-group tm-search-box">
+                  <input
+                    type="text"
+                    name="Palabra clave"
+                    class="form-control tm-search-input"
+                    placeholder="Type your keyword ..."
+                    value={filters.title}
+                    onChange={setFilterValue("title")}
+                  ></input>
+                  <input
+                    type="submit"
+                    value="Buscar"
+                    class="form-control tm-search-submit"
+                  ></input>
+                </div>
+              </form>
+            </div>
+
+            <div class="row tm-albums-container grid">
+              {shownBooks.map((book) => {
+                return (
+                  <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
+                    <Book data={book}></Book>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   function page() {
     if (
       window.location.pathname === "/admin.html" ||
       window.location.hash === "admin"
     )
       return adminPage();
+    else if (
+      window.location.pathname === "/delete.html" ||
+      window.location.hash === "delete"
+    )
+      return deletePage();
     return booksPage();
   }
 
