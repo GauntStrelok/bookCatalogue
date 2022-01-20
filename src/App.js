@@ -5,7 +5,7 @@ import "./App.css";
 import "./css/bootstrap.min.css";
 import "./css/fontawesome-all.min.css";
 import "./css/tooplate-style.css";
-import $ from "jquery";
+import $, { get } from "jquery";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import firebaseConfig from "./firebase/config";
@@ -546,7 +546,7 @@ function App() {
               {shownBooks.map((book) => {
                 return (
                   <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-                    <Book data={book}></Book>
+                    <Book data={book} canDelete={true} ></Book>
                   </div>
                 );
               })}
@@ -556,6 +556,7 @@ function App() {
       </div>
     );
   }
+
   function page() {
     if (
       window.location.pathname === "/admin.html" ||
@@ -569,7 +570,6 @@ function App() {
       return deletePage();
     return booksPage();
   }
-
   return page();
 }
 

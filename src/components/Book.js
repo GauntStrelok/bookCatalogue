@@ -7,6 +7,8 @@ export default function Book(props) {
 
   const data = props.data;
 
+  const canDelete = props.canDelete;
+
   function openModal() {
     setShowModal(true);
   }
@@ -14,15 +16,7 @@ export default function Book(props) {
   function closeModal() {
     setShowModal(false);
   }
-
-  // function addDeleteButton() {
-  //   if (
-  //     window.location.pathname === "/delete.html" ||
-  //     window.location.hash === "delete"
-  //   )
-  //   return (<button onClick={closeModal} className="buttonDelete">Delete</button>);
-  // }
-
+  // const res = await db.collection('books').doc('id').delete();
   return (
     <div style={{ maxWidth: "100%" }}>
       <div className="imageContainer" onClick={openModal}>
@@ -34,9 +28,8 @@ export default function Book(props) {
         onRequestClose={closeModal}
         contentLabel="Minimal Modal Example"
       >
-        <button onClick={closeModal} className="buttonClose"><img src="/closeIcon.png" className="image"/></button>
-        {/* {addDeleteButton} */}
-        {/* <button onClick={closeModal} className="buttonDelete">Delete</button> */}
+        <button onClick={closeModal} className="buttonClose" id="1"><img src="/closeIcon.png" className="image"/></button>
+        {canDelete && <button onClick={closeModal} id="btndelete">Delete</button>}
         <img src={data.linkImage} className="image2" />
         <div className="descriptionContainer">
           <div>{data.title || "Titulo de Libro"}</div>
