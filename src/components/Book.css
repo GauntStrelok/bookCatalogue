@@ -61,11 +61,20 @@
   right: 1vh;
   top: 1vh;
 }
-
-.buttonDeleteHidden {
-  visibility: hidden;
-}
-
-.buttonDeleteVisible {
-  visibility: visible;
+.buttonDelete {
+  background: #e62143;
+  border-radius: 11px;
+  color: #fff;
+  cursor: pointer;
+  font-family: Mija,-apple-system,BlinkMacSystemFont,Roboto,"Roboto Slab","Droid Serif","Segoe UI",system-ui,Arial,sans-serif;
+  font-size: 2vh;
+  font-weight: 500;
+  justify-content: center;
+  text-align: center;
+  width: 15vh;
+  height: 5vh;
+  border: 0;
+  position: absolute;
+  right: 5vh;
+  top: 1vh;
 }

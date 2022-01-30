@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./Book.css";
 import Modal from "react-modal";
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+import firebaseConfig from "../firebase/config";
 
 export default function Book(props) {
   const [showModal, setShowModal] = useState(false);
 
   const data = props.data;
+
+  // const deleteB = props.deleteB;
 
   const canDelete = props.canDelete;
 
@@ -16,7 +21,12 @@ export default function Book(props) {
   function closeModal() {
     setShowModal(false);
   }
-  // const res = await db.collection('books').doc('id').delete();
+
+  function deleteBook () {
+     props.deleteB(data.id)
+
+  }
+
   return (
     <div style={{ maxWidth: "100%" }}>
       <div className="imageContainer" onClick={openModal}>
@@ -28,8 +38,8 @@ export default function Book(props) {
         onRequestClose={closeModal}
         contentLabel="Minimal Modal Example"
       >
-        <button onClick={closeModal} className="buttonClose" id="1"><img src="/closeIcon.png" className="image"/></button>
-        {canDelete && <button onClick={closeModal} id="btndelete">Delete</button>}
+        <button onClick={closeModal} className="buttonClose"><img src="/closeIcon.png" className="image"/></button>
+        {canDelete && <button onClick={deleteBook} className="buttonDelete">Delete</button>}
         <img src={data.linkImage} className="image2" />
         <div className="descriptionContainer">
           <div>{data.title || "Titulo de Libro"}</div>

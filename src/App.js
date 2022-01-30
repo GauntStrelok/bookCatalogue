@@ -92,6 +92,19 @@ function App() {
       });
   }
 
+  function deleteBook (id) {
+    if (window.confirm("Estas seguro?")){
+      if (!database) {
+        database = firebase.firestore(app);
+      }
+      database.collection("books").doc(id).delete().then(() => {
+        alert("Libro borrado.");
+    }).catch((error) => {
+        alert("No se pudo borrar el libro, error: ", error);
+    });
+    }
+  }
+
   function filterBooks(filters) {
     if (filters && filters.title) {
         let text = filters.title.toLowerCase();
@@ -493,6 +506,10 @@ function App() {
     );
   }
   function deletePage() {
+    if (!auth)
+      firebaseAuth(() => {
+        auth = true;
+      });
     return (
       <div className="akiraBooks">
         <div id="loader-wrapper">
@@ -546,7 +563,7 @@ function App() {
               {shownBooks.map((book) => {
                 return (
                   <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-                    <Book data={book} canDelete={true} ></Book>
+                    <Book data={book} canDelete={true} deleteB={deleteBook} ></Book>
                   </div>
                 );
               })}
