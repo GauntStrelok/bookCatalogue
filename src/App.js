@@ -72,7 +72,7 @@ function App() {
     if (startAfter) {
       bookCollection = bookCollection.startAfter(startAfter);
     }
-    bookCollection = bookCollection.limit(1000);
+    bookCollection = bookCollection.orderBy(firebase.firestore.FieldPath.documentId()).limit(10);
     bookCollection
       .get()
       .then((snapshot) => {
