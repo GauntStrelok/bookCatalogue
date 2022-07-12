@@ -1,5 +1,6 @@
 import React from "react";
 import Book from "../components/Book";
+import "../App.css";
 import firebaseAuth from "../authentication/firebaseAuth";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
