@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 // import { useSelector } from "react-redux";
 import Home from "./Home";
+import Admin from "./Admin";
 
 export default function Router() {
   const location = useLocation();
@@ -10,6 +11,7 @@ export default function Router() {
   return (
     <Routes location={location} key={location.pathname}>
       <Route index element={<Home />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }
