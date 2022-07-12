@@ -6,7 +6,7 @@
   background-image: url(./img/akiraTitle.jpg);
   background-size: contain;
   height: 119px;
-  /* background-repeat-x: no-repeat; */
+  background-repeat-x: no-repeat;
   background-position: center;
 }
 
