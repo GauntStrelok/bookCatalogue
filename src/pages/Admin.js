@@ -3,6 +3,7 @@ import * as firebase from "firebase/app";
 import "firebase/firestore";
 import app from "../firebase/firebase-config";
 import firebaseAuth from "../authentication/firebaseAuth";
+import "./Admin.css";
 
 let database = null;
 let auth = false;
