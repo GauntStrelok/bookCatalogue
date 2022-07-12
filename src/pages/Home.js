@@ -3,14 +3,13 @@ import "../App.css";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import $, { get } from "jquery";
-import firebaseConfig from "../firebase/config";
+import app from "../firebase/firebase-config";
 import SocialNet from "../components/SocialNet";
 import Book from "../components/Book";
 import "../css/bootstrap.min.css";
 import "../css/fontawesome-all.min.css";
 import "../css/tooplate-style.css";
 
-let app = firebase.initializeApp(firebaseConfig);
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
 let allBooks = [];
