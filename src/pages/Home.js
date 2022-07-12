@@ -5,9 +5,6 @@ import "firebase/firestore";
 import app from "../firebase/firebase-config";
 import SocialNet from "../components/SocialNet";
 import Book from "../components/Book";
-import "../css/bootstrap.min.css";
-import "../css/fontawesome-all.min.css";
-import "../css/tooplate-style.css";
 
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
