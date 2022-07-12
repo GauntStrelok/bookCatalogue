@@ -4,7 +4,6 @@ import firebaseAuth from "../authentication/firebaseAuth";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import app from "../firebase/firebase-config";
-import $, { get } from "jquery";
 
 let database = null;
 let auth = false; //controls that i have already authed
@@ -130,12 +129,10 @@ export default function Delete() {
         })*/
   }
 
-  // Similar to componentDidMount and componentDidUpdate:
   React.useEffect(() => {
-    $(function () {
-      $("body").addClass("loaded");
-      //$('.tm-current-year').text(new Date().getFullYear());  Update year in copyright
-    });
+    document.body.classList.add("loaded");
+    //$('.tm-current-year').text(new Date().getFullYear());  Update year in copyright
+    // });
     if (!booksLoaded) {
       booksLoaded = true;
       loadBooks();

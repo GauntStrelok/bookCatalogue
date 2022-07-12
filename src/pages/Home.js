@@ -2,7 +2,6 @@ import React from "react";
 import "../App.css";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
-import $, { get } from "jquery";
 import app from "../firebase/firebase-config";
 import SocialNet from "../components/SocialNet";
 import Book from "../components/Book";
@@ -115,12 +114,10 @@ export default function Home() {
     };
   }
 
-  // Similar to componentDidMount and componentDidUpdate:
   React.useEffect(() => {
-    $(function () {
-      $("body").addClass("loaded");
-      //$('.tm-current-year').text(new Date().getFullYear());  Update year in copyright
-    });
+    document.body.classList.add("loaded");
+    //$('.tm-current-year').text(new Date().getFullYear());  Update year in copyright
+    // });
     if (!booksLoaded) {
       booksLoaded = true;
       loadBooks();
