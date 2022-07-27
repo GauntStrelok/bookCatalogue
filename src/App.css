@@ -2,10 +2,6 @@
   display: flex;
 }
 
-.formContainer {
-  margin: 30px;
-}
-
 .tm-site-name {
   background-image: url(./img/akiraTitle.jpg);
   background-size: contain;
