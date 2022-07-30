@@ -113,6 +113,7 @@ export default function Home() {
 
   React.useEffect(() => {
     document.body.classList.add("loaded");
+    document.body.classList.add("contain-bg");
     //$('.tm-current-year').text(new Date().getFullYear());  Update year in copyright
     // });
     if (!booksLoaded) {
@@ -187,7 +188,7 @@ export default function Home() {
           <div class="row tm-albums-container grid">
             {shownBooks.map((book) => {
               return (
-                <div class="col-sm-6 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
+                <div class="col-sm-4 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
                   <Book data={book}></Book>
                 </div>
               );
