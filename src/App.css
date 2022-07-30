@@ -19,6 +19,12 @@ body {
   background-image: url(./img/akiraOpacity.jpg);
 }
 
+@media (max-width: 768px) {
+  .contain-bg {
+    background-size: contain;
+  }
+}
+
 .tm-album-col {
   margin-top: 15px;
 }
