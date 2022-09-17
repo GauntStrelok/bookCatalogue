@@ -5,6 +5,10 @@ import "firebase/firestore";
 import app from "../firebase/firebase-config";
 import SocialNet from "../components/SocialNet";
 import Book from "../components/Book";
+import { Link } from "react-router-dom";
+import BookDetails from "./BookDetails";
+import "../components/Book.css";
+import { useLocation } from "react-router-dom";
 
 let booksLoaded = window.location.pathname === "/admin.html";
 let database = null;
@@ -19,6 +23,8 @@ export default function Home() {
   const [books, setBooks] = React.useState([]);
   const [shownBooks, setShownBooks] = React.useState([]);
   const [filters, setFilters] = React.useState({});
+
+  let location = useLocation();
 
   function loadBooks(loadFilters, startAfter) {
     console.log(loadFilters, startAfter);
@@ -121,7 +127,7 @@ export default function Home() {
       loadBooks();
     }
     //firebaseAuth();
-  });
+  }, []);
 
   return (
     <div className="akiraBooks">
@@ -189,7 +195,17 @@ export default function Home() {
             {shownBooks.map((book) => {
               return (
                 <div class="col-sm-4 col-12 col-md-4 col-lg-2 col-xl-2 tm-album-col">
-                  <Book data={book}></Book>
+                  <Link
+                    to={`/details/${book.id}`}
+                    state={{ book: book, backgroundLocation: location }}
+                  >
+                    <div className="imageContainer">
+                      <img src={book.linkImage} className="image" />
+                      <div className="title">{book.title || ""}</div>
+                    </div>
+                    {/* <Book data={book}></Book> */}
+                    {/* <BookDetails key={book.id} data={book} /> */}
+                  </Link>
                 </div>
               );
             })}
