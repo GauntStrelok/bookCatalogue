@@ -22,9 +22,8 @@ export default function Book(props) {
     setShowModal(false);
   }
 
-  function deleteBook () {
-     props.deleteB(data.id)
-
+  function deleteBook() {
+    props.deleteB(data.id);
   }
 
   return (
@@ -33,18 +32,23 @@ export default function Book(props) {
         <img src={data.linkImage} className="image" />
         <div className="title">{data.title || ""}</div>
       </div>
-      <Modal
+      {/* <Modal
         isOpen={showModal}
         onRequestClose={closeModal}
         contentLabel="Minimal Modal Example"
       >
-        <button onClick={closeModal} className="buttonClose"><img src="/closeIcon.png" className="image"/></button>
-        {canDelete && <button onClick={deleteBook} className="buttonDelete">Delete</button>}
+        <button onClick={closeModal} className="buttonClose">
+          <img src="/closeIcon.png" className="image" />
+        </button>
+        {canDelete && (
+          <button onClick={deleteBook} className="buttonDelete">
+            Delete
+          </button>
+        )}
         <img src={data.linkImage} className="image2" />
         <div className="descriptionContainer">
           <div>{data.title || "Titulo de Libro"}</div>
           <div>
-            {/* description */}
             <span>Autor:</span>
             <span>{data.author}</span>
           </div>
@@ -91,7 +95,7 @@ export default function Book(props) {
             </a>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
